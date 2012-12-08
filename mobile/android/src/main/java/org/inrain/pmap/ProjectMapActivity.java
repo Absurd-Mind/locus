@@ -1,5 +1,8 @@
 package org.inrain.pmap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -79,9 +83,8 @@ public class ProjectMapActivity extends Activity {
     
     private OnClickListener mapButtonClickListener = new OnClickListener() {
         public void onClick(View view) {
-            Uri uri = Uri.parse(serverUrl);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
+            Intent intent = new Intent(ProjectMapActivity.this, FriendList.class);
+            startActivityForResult(intent, 0);
         }
     };
     

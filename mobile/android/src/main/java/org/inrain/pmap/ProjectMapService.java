@@ -20,7 +20,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.widget.TextView;
 
 public class ProjectMapService extends Service {
     public static boolean running = false;
@@ -72,8 +71,8 @@ public class ProjectMapService extends Service {
         
         // LOCATION
         // Acquire a reference to the system Location Manager
-        //String locationProvider = LocationManager.GPS_PROVIDER;
-        String locationProvider = LocationManager.NETWORK_PROVIDER;
+        String locationProvider = LocationManager.GPS_PROVIDER;
+        //String locationProvider = LocationManager.NETWORK_PROVIDER;
       
         //debug("listening for locationsx");
         Location location = locationManager.getLastKnownLocation(locationProvider);

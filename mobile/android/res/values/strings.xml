@@ -10,5 +10,6 @@
     <string name="mapButton">Show Map</string>
     <string name="serviceLabel">Service:</string>
     <string name="mapLabel">Map:</string>
+    <string name="toggleButton">OFF</string>
 
 </resources>
