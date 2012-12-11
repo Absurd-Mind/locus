@@ -1,8 +1,10 @@
 package org.inrain.pmap.services;
 
 import org.inrain.pmap.R;
+import org.inrain.pmap.Util;
 import org.inrain.pmap.activities.MainActivity;
 import org.inrain.pmap.provider.location.LocationProvider;
+import org.slf4j.Logger;
 
 import roboguice.service.RoboService;
 import android.app.Notification;
@@ -22,9 +24,11 @@ public class LocationUpdateService extends RoboService {
 
     @Inject
     LocationProvider locationProvider;
-    
+
     @Inject
     LocationSender locationSender;
+
+    private final Logger logger = Util.createLogger();
 
     public LocationUpdateService() {
     }
@@ -37,16 +41,18 @@ public class LocationUpdateService extends RoboService {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        System.out.println("starting service");
+        logger.trace("starting service");
+
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-        Notification notification = new Notification(R.drawable.ic_menu_mapmode, getText(R.string.ongoingNotification),
-                System.currentTimeMillis());
+        Notification notification = new Notification(R.drawable.ic_menu_mapmode,
+                                                     getText(R.string.ongoingNotification),
+                                                     System.currentTimeMillis());
         notification.setLatestEventInfo(this, getText(R.string.ongoingNotification), "foo", pendingIntent);
 
         int ONGOING_NOTIFICATION = 1;
-        startForeground(1, notification);
+        startForeground(ONGOING_NOTIFICATION, notification);
 
         // LOCATION
         // Acquire a reference to the system Location Manager
@@ -89,7 +95,10 @@ public class LocationUpdateService extends RoboService {
     // private int counter = 0;
     //
     private void update(Location location) {
+        logger.trace("updateLocation");
+
         locationProvider.setCurrentLocation(location);
+        locationSender.updateLocation(location);
     }
 
     // HttpClient client = new DefaultHttpClient();
