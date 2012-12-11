@@ -48,6 +48,7 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+        logger.trace("onListItemClick");
 
         Intent i = new Intent(this, FriendList.class);
         startActivity(i);
@@ -55,6 +56,7 @@ public class MainActivity extends ListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        logger.trace("onCreateOptionsMenu");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
@@ -62,6 +64,7 @@ public class MainActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        logger.trace("onOptionsItemSelected");
         switch (item.getItemId()) {
         case R.id.options:
             Intent i = new Intent(this, OptionsActivity.class);
