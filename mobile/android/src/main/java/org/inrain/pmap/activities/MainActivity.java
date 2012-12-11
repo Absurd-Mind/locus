@@ -1,13 +1,22 @@
-package org.inrain.pmap;
+package org.inrain.pmap.activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.inrain.pmap.R;
+import org.inrain.pmap.R.id;
+import org.inrain.pmap.R.menu;
+import org.inrain.pmap.services.LocationUpdateService;
+
 import android.app.ListActivity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -19,6 +28,9 @@ public class MainActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        System.out.println("test");
+        startService(new Intent(this, LocationUpdateService.class));
 
         List<Map<String, String>> list = new ArrayList<Map<String, String>>();
         Map<String, String> map = new HashMap<String, String>();
@@ -37,5 +49,24 @@ public class MainActivity extends ListActivity {
         
         Intent i = new Intent(this, FriendList.class);
         startActivity(i);
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.options:
+                Intent i = new Intent(this, OptionsActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

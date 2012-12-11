@@ -1,9 +1,13 @@
-package org.inrain.pmap;
+package org.inrain.pmap.activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.inrain.pmap.Friend;
+import org.inrain.pmap.provider.content.ContentProvider;
+import org.inrain.pmap.provider.location.LocationProvider;
 
 import roboguice.activity.RoboListActivity;
 import android.location.Location;
@@ -18,14 +22,17 @@ public class FriendList extends RoboListActivity {
     
     @Inject
     private ContentProvider contentProvider;
-
+    
+    @Inject
+    private LocationProvider locationProvider;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("onCreate");
         
         List<Friend> friendList = contentProvider.getFriendList();
-        Location myLocation = contentProvider.getCurrentLocation();
+        Location myLocation = locationProvider.getCurrentLocation();
         list = createFriendsList(friendList, myLocation);
         
         sa = new SimpleAdapter(this, list, android.R.layout.two_line_list_item, new String[] { "line1", "line2" },

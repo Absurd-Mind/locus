@@ -11,5 +11,8 @@
     <string name="serviceLabel">Service:</string>
     <string name="mapLabel">Map:</string>
     <string name="toggleButton">OFF</string>
+    <string name="mainMenuOptions">Optionen</string>
+    <string name="pref_username">pref_username</string>
+    <string name="pref_server_url">pref_server_url</string>
 
 </resources>

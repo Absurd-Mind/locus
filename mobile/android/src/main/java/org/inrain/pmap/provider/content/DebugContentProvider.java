@@ -1,15 +1,14 @@
-package org.inrain.pmap;
+package org.inrain.pmap.provider.content;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.inrain.pmap.Friend;
+
 import android.location.Location;
 
-import com.google.inject.Singleton;
-
-@Singleton
-public class ContentProvider {
-
+public class DebugContentProvider implements ContentProvider {
+    
     public List<Friend> getFriendList() {
         List<Friend> friends = new ArrayList<Friend>();
         friends.add(new Friend("Fred"));
@@ -24,12 +23,4 @@ public class ContentProvider {
         friends.get(1).setLocation(loc2);
         return friends;
     }
-
-    public Location getCurrentLocation() {
-        Location myLoc = new Location("mock");
-        myLoc.setLongitude(9.687778);
-        myLoc.setLatitude(53.465833);
-        return myLoc;
-    }
-
 }
