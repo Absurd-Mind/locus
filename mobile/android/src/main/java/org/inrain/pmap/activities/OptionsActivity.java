@@ -2,7 +2,6 @@ package org.inrain.pmap.activities;
 
 import org.inrain.pmap.Constants;
 import org.inrain.pmap.R;
-import org.inrain.pmap.R.xml;
 
 import roboguice.activity.RoboPreferenceActivity;
 import roboguice.inject.InjectPreference;
@@ -31,11 +30,13 @@ public class OptionsActivity extends RoboPreferenceActivity implements OnSharedP
         serverUrl.setSummary(sp.getString(Constants.PREFERENCE_SERVER_URL_KEY, ""));
     }
     
+    @Override
     protected void onResume() {
         super.onResume();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener( this );
     }
 
+    @Override
     protected void onPause() {
         super.onPause();
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener( this );
