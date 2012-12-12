@@ -28,10 +28,15 @@ public class LocationUpdateService extends RoboService {
     private final Logger logger = Util.createLogger();
 
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        logger.trace("onCreate LocationUpdateService");
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        logger.trace("starting service");
+        logger.trace("starting LocationUpdateService");
         
         final long sleepTime = registerListenerOnLocationManager(locationListener);
         
