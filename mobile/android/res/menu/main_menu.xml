@@ -3,4 +3,8 @@
     <item
         android:id="@+id/options"
         android:title="@string/mainMenuOptions"/>
+
+    <item
+        android:id="@+id/forceLocationUpdate"
+        android:title="@string/forceLocationUpdate"/>
 </menu>
