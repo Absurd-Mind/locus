@@ -24,46 +24,14 @@ public class LocationSender {
     @Inject
     private PreferencesProvider preferencesProvider;
 
-    private Location lastSuccessfulSendLocation;
-
     private final Logger logger = Util.createLogger();
 
-    private static final long LOCATION_TIMEOUT = 300 * 1000;
-
-    public boolean updateLocation(Location newLocation) {
+    public boolean sendLocation(Location newLocation) {
         logger.trace("updateLocation");
-        if (updateNeeded(newLocation)) {
-            return sendAndUpdateLocation(newLocation);
-        }
-        return false;
-    }
-
-    private boolean sendAndUpdateLocation(Location newLocation) {
         if (sendLocationToServer(newLocation)) {
             logger.trace("sending location to server: success");
-            lastSuccessfulSendLocation = newLocation;
             return true;
         }
-        return false;
-    }
-
-    private boolean updateNeeded(Location newLocation) {
-        if (lastSuccessfulSendLocation == null) {
-            logger.trace("no previous location available");
-            return true;
-        }
-
-        if (newLocation.getTime() > lastSuccessfulSendLocation.getTime() + LOCATION_TIMEOUT) {
-            logger.trace("last location is not up to date anymore");
-            return true;
-        }
-
-        if (newLocation.getAccuracy() < lastSuccessfulSendLocation.getAccuracy()) {
-            logger.trace("new location has higher accuracy");
-            return true;
-        }
-
-        logger.trace("location update not needed");
         return false;
     }
 
