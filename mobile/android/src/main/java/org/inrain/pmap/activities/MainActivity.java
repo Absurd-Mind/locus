@@ -94,10 +94,10 @@ public class MainActivity extends RoboActivity implements LocationObserver {
 
     private void displayLocation(Location location) {
         locationProvide.setText(location.getProvider());
-        locationLatitude.setText("" + location.getLatitude());
-        locationLongitude.setText("" + location.getLongitude());
-        locationAccuracy.setText("" + location.getAccuracy());
-        locationTime.setText("" + location.getTime());
+        locationLatitude.setText(String.format("%.6f", location.getLatitude()));
+        locationLongitude.setText(String.format("%.6f", location.getLongitude()));
+        locationAccuracy.setText(String.format("%.0f", location.getAccuracy()));
+        locationTime.setText(String.format("%1$tH:%1$tM", new Date(location.getTime())));
     }
 
     @Override
