@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.inrain.pmap.ProjectMapApplication;
 import org.inrain.pmap.R;
 import org.inrain.pmap.Util;
 import org.inrain.pmap.provider.location.LocationObserver;
@@ -79,6 +78,11 @@ public class MainActivity extends RoboActivity implements LocationObserver {
         map.put("line1", "locate your friends");
         map.put("line2", "show distances of your friends");
         list.add(map);
+        
+        map = new HashMap<String, String>();
+        map.put("line1", "show map");
+        map.put("line2", "show a map with your friends");
+        list.add(map);
 
         listAdapter = new SimpleAdapter(this, list, android.R.layout.two_line_list_item, new String[] { "line1",
                 "line2" }, new int[] { android.R.id.text1, android.R.id.text2 });
@@ -87,8 +91,13 @@ public class MainActivity extends RoboActivity implements LocationObserver {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 logger.trace("onListItemClick");
 
-                Intent i = new Intent(MainActivity.this, FriendList.class);
-                startActivity(i);
+                if (arg2 == 0) {
+                    Intent i = new Intent(MainActivity.this, FriendList.class);
+                    startActivity(i);
+                } else if (arg2 == 1) {
+                    Intent i = new Intent(MainActivity.this, FriendMapActivity.class);
+                    startActivity(i);
+                }
             }
         });
 

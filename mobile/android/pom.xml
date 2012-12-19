@@ -18,6 +18,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.google.android.maps</groupId>
+			<artifactId>maps</artifactId>
+			<version>8_r2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.roboguice</groupId>
 			<artifactId>roboguice</artifactId>
 			<version>2.0</version>
@@ -27,10 +33,17 @@
 			<artifactId>slf4j-android</artifactId>
 			<version>1.6.1-RC1</version>
 		</dependency>
+		<dependency>
+			<groupId>android.support</groupId>
+			<artifactId>compatibility-v4</artifactId>
+			<version>11</version>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
+		<outputDirectory>bin/classes/</outputDirectory>
+		<testOutputDirectory>bin/test-classes/</testOutputDirectory>
 		<pluginManagement>
 			<plugins>
 				<plugin>

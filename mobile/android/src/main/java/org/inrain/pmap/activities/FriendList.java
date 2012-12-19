@@ -8,6 +8,7 @@ import java.util.Map;
 import org.inrain.pmap.Friend;
 import org.inrain.pmap.Util;
 import org.inrain.pmap.provider.content.ContentProvider;
+import org.inrain.pmap.provider.location.LocationObserver;
 import org.inrain.pmap.provider.location.LocationProvider;
 import org.slf4j.Logger;
 
@@ -18,7 +19,7 @@ import android.widget.SimpleAdapter;
 
 import com.google.inject.Inject;
 
-public class FriendList extends RoboListActivity {
+public class FriendList extends RoboListActivity implements LocationObserver {
     private SimpleAdapter sa;
     private List<Map<String, String>> list;
 
@@ -39,13 +40,27 @@ public class FriendList extends RoboListActivity {
         List<Friend> friendList = contentProvider.getFriendList();
         Location myLocation = locationProvider.getCurrentLocation();
         list = createFriendsList(friendList, myLocation);
-
+        
         sa = new SimpleAdapter(this,
                                list,
                                android.R.layout.two_line_list_item,
                                new String[] { "line1", "line2" },
                                new int[] { android.R.id.text1, android.R.id.text2 });
         setListAdapter(sa);
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        
+        locationProvider.unregisterLocationObserver(this);
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        
+        locationProvider.registerLocationObserver(this);
     }
 
     private List<Map<String, String>> createFriendsList(List<Friend> friendList, Location myLocation) {
@@ -78,6 +93,19 @@ public class FriendList extends RoboListActivity {
                                  friend.getLocation().getLongitude(),
                                  result);
         return result[0] + "m";
+    }
+
+    public void locationUpdated(Location location) {
+        logger.trace("location Updated while in friendList");
+        
+        List<Friend> friendList = contentProvider.getFriendList();
+        list = createFriendsList(friendList, location);
+        logger.trace("show line2: {}", list.get(0).get("line2"));
+        
+        list = new ArrayList<Map<String, String>>();
+        sa.notifyDataSetChanged();
+        setListAdapter(sa);
+        getListView().refreshDrawableState();
     }
 
 }
