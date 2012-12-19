@@ -8,6 +8,7 @@ import roboguice.service.RoboService;
 import android.content.Intent;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Handler;
 import android.os.IBinder;
 
 import com.google.inject.Inject;
@@ -27,11 +28,24 @@ public class LocationUpdateService extends RoboService {
 
     private final Logger logger = Util.createLogger();
 
+    private static final long TIMEOUT = 10 * 60 * 1000;
+
+    private Handler handler = new Handler();
+
 
     @Override
     public void onCreate() {
         super.onCreate();
         logger.trace("onCreate LocationUpdateService");
+
+        final Runnable runnable = new Runnable() {
+            public void run() {
+                startService(new Intent(LocationUpdateService.this, LocationUpdateService.class));
+
+                handler.postDelayed(this, TIMEOUT);
+            }
+         };
+         handler.postDelayed(runnable, TIMEOUT);
     }
 
     @Override
@@ -62,13 +76,13 @@ public class LocationUpdateService extends RoboService {
 
     private long registerListenerOnLocationManager(LocationListener locationListener) {
         logger.trace("enabling listener for network");
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
         
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             logger.trace("enabling listener for gps");
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
             
-            return 20 * 1000;
+            return 30 * 1000;
         }
         return 5 * 1000;
     }
