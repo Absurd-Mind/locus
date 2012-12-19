@@ -1,6 +1,7 @@
 package org.inrain.pmap.activities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.inrain.pmap.R;
 import org.inrain.pmap.Util;
 import org.inrain.pmap.provider.location.LocationObserver;
 import org.inrain.pmap.provider.location.LocationProvider;
+import org.inrain.pmap.provider.preferences.PreferencesProvider;
 import org.inrain.pmap.services.LocationUpdateService;
 import org.slf4j.Logger;
 
@@ -22,12 +24,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.google.inject.Inject;
 
@@ -54,8 +58,14 @@ public class MainActivity extends RoboActivity implements LocationObserver {
     @InjectView(R.id.locationTime)
     private TextView locationTime;
 
+    @InjectView(R.id.activateButton)
+    private ToggleButton activateButton;
+
     @Inject
     private LocationProvider locationProvider;
+
+    @Inject
+    private PreferencesProvider preferenceProvider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +91,14 @@ public class MainActivity extends RoboActivity implements LocationObserver {
                 startActivity(i);
             }
         });
+
+        activateButton.setChecked(preferenceProvider.isActivated());
+        activateButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                boolean currentStatus = activateButton.isChecked();
+                preferenceProvider.setActivated(currentStatus);
+            }
+        });
     }
 
     @Override
@@ -96,7 +114,7 @@ public class MainActivity extends RoboActivity implements LocationObserver {
         locationProvide.setText(location.getProvider());
         locationLatitude.setText(String.format("%.6f", location.getLatitude()));
         locationLongitude.setText(String.format("%.6f", location.getLongitude()));
-        locationAccuracy.setText(String.format("%.0f", location.getAccuracy()));
+        locationAccuracy.setText(String.format("%.0fm", location.getAccuracy()));
         locationTime.setText(String.format("%1$tH:%1$tM", new Date(location.getTime())));
     }
 

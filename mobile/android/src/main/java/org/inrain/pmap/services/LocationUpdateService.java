@@ -2,6 +2,7 @@ package org.inrain.pmap.services;
 
 import org.inrain.pmap.Util;
 import org.inrain.pmap.provider.location.LocationProvider;
+import org.inrain.pmap.provider.preferences.PreferencesProvider;
 import org.slf4j.Logger;
 
 import roboguice.service.RoboService;
@@ -25,6 +26,9 @@ public class LocationUpdateService extends RoboService {
     
     @Inject
     private LocationListenerAndHolder locationListener;
+
+    @Inject
+    private PreferencesProvider preferencesProvider;
 
     private final Logger logger = Util.createLogger();
 
@@ -52,6 +56,12 @@ public class LocationUpdateService extends RoboService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         logger.trace("starting LocationUpdateService");
         
+        boolean activated = preferencesProvider.isActivated();
+        if (!activated) {
+            logger.trace("not running because it is deactivated");
+            return START_STICKY;
+        }
+
         final long sleepTime = registerListenerOnLocationManager(locationListener);
         
         Thread workingThread = new Thread() {
