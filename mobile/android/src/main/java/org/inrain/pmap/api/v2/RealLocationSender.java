@@ -1,4 +1,4 @@
-package org.inrain.pmap.services;
+package org.inrain.pmap.api.v2;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

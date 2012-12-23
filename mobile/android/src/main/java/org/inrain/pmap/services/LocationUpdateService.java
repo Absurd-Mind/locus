@@ -1,6 +1,7 @@
 package org.inrain.pmap.services;
 
 import org.inrain.pmap.Util;
+import org.inrain.pmap.api.v2.LocationSender;
 import org.inrain.pmap.provider.location.LocationProvider;
 import org.inrain.pmap.provider.preferences.PreferencesProvider;
 import org.slf4j.Logger;
