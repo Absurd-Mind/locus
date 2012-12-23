@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.inrain.pmap</groupId>
-	<artifactId>ProjectMap</artifactId>
+	<artifactId>Locus</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>apk</packaging>
 
@@ -38,12 +38,22 @@
 			<artifactId>compatibility-v4</artifactId>
 			<version>11</version>
 		</dependency>
+        <dependency>
+            <groupId>com.google.android.gms</groupId>
+            <artifactId>google-play-services</artifactId>
+            <version>4</version>
+            <type>apklib</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.android.gms</groupId>
+            <artifactId>google-play-services</artifactId>
+            <version>4</version>
+            <type>jar</type>
+        </dependency>
 	</dependencies>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		<outputDirectory>bin/classes/</outputDirectory>
-		<testOutputDirectory>bin/test-classes/</testOutputDirectory>
 		<pluginManagement>
 			<plugins>
 				<plugin>
