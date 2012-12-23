@@ -30,7 +30,7 @@
         <activity android:name=".activities.FriendMapActivity" android:label="Map"></activity>
         <activity android:name=".activities.FriendList" android:label="Friends"></activity>
         <activity android:name=".activities.OptionsActivity" android:label="Options"></activity>
-        <activity android:name=".activities.MainActivity" android:label="Main Menu">
+        <activity android:name=".activities.MainActivity" android:label="Locus">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
