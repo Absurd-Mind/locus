@@ -1,7 +1,7 @@
 package org.inrain.pmap;
 
-import org.inrain.pmap.api.v2.LocationSender;
-import org.inrain.pmap.api.v2.RealLocationSender;
+import org.inrain.pmap.api.v2.ApiDataProvider;
+import org.inrain.pmap.api.v2.ServerAPIV2Module;
 import org.inrain.pmap.provider.content.ContentProvider;
 import org.inrain.pmap.provider.content.InternetContentProvider;
 import org.inrain.pmap.provider.location.FooLocationProvider;
@@ -18,6 +18,7 @@ public class ProjectMapModule extends AbstractModule {
         bind(ContentProvider.class).to(InternetContentProvider.class);
         bind(LocationProvider.class).to(FooLocationProvider.class);
         bind(PreferencesProvider.class).to(RealPreferencesProvider.class);
-        bind(LocationSender.class).to(RealLocationSender.class);
+        install(new ServerAPIV2Module());
+        bind(ApiDataProvider.class).to(ServerAPIConnector.class);
     }
 }

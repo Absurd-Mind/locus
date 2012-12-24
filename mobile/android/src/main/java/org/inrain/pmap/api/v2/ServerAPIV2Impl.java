@@ -7,22 +7,26 @@ import org.inrain.pmap.Friend;
 import android.location.Location;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 class ServerAPIV2Impl implements ServerAPIV2 {
     private LocationSender locationSender;
+    private FriendLocationReceiver friendLocationReceiver;
+    private ApiDataProvider apiDataProvider;
     
     @Inject
-    ServerAPIV2Impl(LocationSender locationSender) {
+    ServerAPIV2Impl(LocationSender locationSender, FriendLocationReceiver friendLocationReceiver, ApiDataProvider apiDataProvider) {
         this.locationSender = locationSender;
+        this.friendLocationReceiver = friendLocationReceiver;
+        this.apiDataProvider = apiDataProvider;
     }
     
-    public boolean sendLocation(String username, Location location) {
-        return locationSender.sendLocation(location);
+    public boolean sendLocation(Location location) {
+        return locationSender.sendLocation(apiDataProvider.getServerBase(), apiDataProvider.getUsername(), location);
     }
 
-    public List<Friend> retrieveFriends() {
-        // TODO Auto-generated method stub
-        return null;
+    public List<Friend> retrieveCurrentFriendLocations() {
+        return friendLocationReceiver.getCurrentFriendLocations(apiDataProvider.getServerBase());
     }
-
 }

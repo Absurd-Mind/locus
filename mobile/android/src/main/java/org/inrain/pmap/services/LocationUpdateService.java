@@ -1,7 +1,7 @@
 package org.inrain.pmap.services;
 
 import org.inrain.pmap.Util;
-import org.inrain.pmap.api.v2.LocationSender;
+import org.inrain.pmap.api.v2.ServerAPIV2;
 import org.inrain.pmap.provider.location.LocationProvider;
 import org.inrain.pmap.provider.preferences.PreferencesProvider;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class LocationUpdateService extends RoboService {
     private LocationProvider locationProvider;
 
     @Inject
-    private LocationSender locationSender;
+    private ServerAPIV2 serverAPI;
     
     @Inject
     private LocationListenerAndHolder locationListener;
@@ -82,7 +82,7 @@ public class LocationUpdateService extends RoboService {
     }
 
     private void sendNewLocation() {
-        locationSender.sendLocation(locationProvider.getCurrentLocation());
+        serverAPI.sendLocation(locationProvider.getCurrentLocation());
     }
 
     private long registerListenerOnLocationManager(LocationListener locationListener) {

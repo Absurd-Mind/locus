@@ -7,7 +7,7 @@ import org.inrain.pmap.Friend;
 import android.location.Location;
 
 public interface ServerAPIV2 {
-    boolean sendLocation(String username, Location location);
+    boolean sendLocation(Location location);
     
-    List<Friend> retrieveFriends();
+    List<Friend> retrieveCurrentFriendLocations();
 }
